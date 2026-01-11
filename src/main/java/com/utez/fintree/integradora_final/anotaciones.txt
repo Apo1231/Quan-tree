@@ -1,0 +1,211 @@
+================================================================================================
+FICHA TÉCNICA DEL PROYECTO: QUAN TREE (Estado Actual)
+================================================================================================
+* **Nombre del Proyecto:** QUAN TREE (anteriormente FinTree).
+* **Objetivo:** Aplicación de escritorio para la gestión de finanzas personales.
+* **Tecnologías Base:** Java 21, JavaFX, Maven.
+* **Persistencia de Datos:** SQLite (a través del driver `sqlite-jdbc`) como sistema de base de datos local. El archivo de la base de datos es `quantree.db`.
+* **Plan a Futuro:** Migración a una base de datos Oracle Cloud (OCI) utilizando una Wallet.
+
+------------------------------------------------------------------------------------------------
+ARQUITECTURA Y PATRONES IMPLEMENTADOS
+------------------------------------------------------------------------------------------------
+1.  **Estructura de Paquetes:** El proyecto está organizado en una estructura profesional que separa las responsabilidades:
+    * `com.utez.fintree.integradora_final` (Paquete raíz para la clase principal y singletons).
+    * `controller`: Contiene todas las clases controladoras de las vistas FXML.
+    * `model`: Contiene las clases de entidad (POJOs) que representan los datos (Ej: `Ahorro`, `Gasto`).
+    * `dao`: Contiene los Data Access Objects, clases responsables de la comunicación directa con la base de datos.
+    * `db`: Contiene la clase de conexión a la base de datos (`ConexionDB`).
+
+2.  **Patrón MVC (Modelo-Vista-Controlador):**
+    * **Modelo:** Las clases en el paquete `model` (`Ahorro`, `Gasto`, `Presupuesto`).
+    * **Vista:** Los archivos FXML que definen la interfaz gráfica.
+    * **Controlador:** Las clases en el paquete `controller` que contienen la lógica de la interfaz.
+
+3.  **Patrón Singleton (`GestorDatos.java`):**
+    * Actúa como el "único punto de verdad" para el estado de los datos de la aplicación en tiempo de ejecución.
+    * En el arranque, carga todos los datos desde los DAOs a `ObservableList`s.
+    * Las vistas se vinculan a estas listas, permitiendo actualizaciones automáticas de la UI.
+    * Centraliza las operaciones de modificación de datos (agregar, actualizar), delegando la persistencia a los DAOs correspondientes.
+
+4.  **Patrón DAO (Data Access Object):**
+    * Se ha implementado para las entidades `Ahorro` y `Gasto`.
+    * Cada DAO (`AhorroDAO`, `GastoDAO`) encapsula todas las consultas SQL (`SELECT`, `INSERT`, `UPDATE`) para su tabla respectiva.
+    * Esto separa completamente la lógica de negocio de la lógica de acceso a datos, haciendo el código más limpio y mantenible.
+
+5.  **Herencia (`BaseController.java`):**
+    * Se creó una clase abstracta `BaseController` que contiene la lógica común para la barra de navegación superior.
+    * Los controladores de las vistas principales (`InicioController`, `AhorrosController`, etc.) heredan de esta clase para evitar la duplicación de código de navegación.
+
+------------------------------------------------------------------------------------------------
+FUNCIONALIDADES COMPLETADAS
+------------------------------------------------------------------------------------------------
+1.  **Flujo de Autenticación:**
+    * Pantallas de Login y Registro con diseño actualizado.
+    * Navegación funcional entre ambas.
+    * Validación de login simulada (`paco`/`123`).
+    * Lógica de registro con validación de campos y diálogos de confirmación (`Alert`).
+
+2.  **Módulo de Ahorros:**
+    * Ciclo CRUD (Crear, Leer, Actualizar) completamente funcional con persistencia en la base de datos.
+    * `AhorrosView`: Muestra una lista de ahorros desde la BD, con un botón "Editar" por cada registro.
+    * `RegistroAhorroView`: Formulario para añadir nuevos ahorros que se guardan en la BD.
+    * `ModificacionAhorroView`: Formulario que se precarga con los datos del ahorro seleccionado y guarda los cambios en la BD.
+    * Uso de diálogos de confirmación para una mejor experiencia de usuario.
+
+3.  **Módulo de Gastos:**
+    * Funcionalidad idéntica a la del módulo de Ahorros, con su propio ciclo CRUD y persistencia en la BD.
+
+4.  **Pantalla de Inicio (Dashboard):**
+    * Diseño actualizado.
+    * Carga y muestra dinámicamente el total de gastos y una gráfica de pastel (`PieChart`) con la distribución de gastos por categoría, todo obtenido de la base de datos.
+
+5.  **Pantalla de Presupuesto (Parcial):**
+    * Se ha creado la vista (`PresupuestoView.fxml`) con el layout de calendarios.
+    * El controlador (`PresupuestoController`) tiene la lógica para mostrar diálogos de registro por mes.
+    * **Pendiente:** La creación del `PresupuestoDAO` y la integración con `GestorDatos` para la persistencia.
+================================================================================================
+
+
+
+
+
+
+
+
+
+
+01/08/25
+Documentación Técnica Exhaustiva del Proyecto: QuanTree
+Resumen del Proyecto
+QuanTree es una aplicación de escritorio para la gestión de finanzas personales, desarrollada como proyecto integrador. Utiliza Java y JavaFX para la interfaz gráfica, Maven para la gestión de dependencias y SQLite como base de datos local. El proyecto fue diseñado siguiendo una arquitectura profesional y patrones de diseño robustos para garantizar su mantenibilidad, escalabilidad y un código limpio.
+
+Fase 1: Cimientos y Arquitectura (0% - 20%)
+El objetivo de esta fase inicial fue establecer una base sólida sobre la cual construir todas las funcionalidades futuras. La prioridad fue la organización del código y la definición de los patrones de diseño que gobernarían todo el proyecto.
+
+1.1. Tecnologías y Entorno
+Lenguaje: Java 21
+
+Framework de UI: JavaFX 21
+
+Gestor de Proyecto: Apache Maven
+
+IDE: IntelliJ IDEA
+
+Base de Datos: SQLite (a través del driver sqlite-jdbc)
+
+1.2. Estructura de Paquetes
+Se definió una estructura de paquetes clara para separar responsabilidades, un principio fundamental de la arquitectura limpia:
+
+com.utez.fintree.integradora_final: Paquete raíz para la clase principal (HelloApplication.java) y clases Singleton.
+
+db: Contiene la clase de conexión a la base de datos (ConexionDB.java), responsable de establecer la conexión y crear el esquema inicial de tablas si no existe.
+
+model: Contiene las clases de entidad (POJOs - Plain Old Java Objects) que representan los datos de la aplicación (ej. Ahorro, Gasto, Usuario).
+
+dao: Contiene los Data Access Objects (DAO), clases cuya única responsabilidad es interactuar con la base de datos (ejecutar consultas SQL).
+
+controller: Contiene las clases controladoras que actúan como el puente entre las vistas (FXML) y los modelos de datos.
+
+1.3. Patrones de Diseño Implementados
+Modelo-Vista-Controlador (MVC): Es el patrón arquitectónico principal.
+
+Modelo: Las clases en el paquete model.
+
+Vista: Los archivos FXML en la carpeta resources, que definen la estructura y diseño de la interfaz de usuario.
+
+Controlador: Las clases en el paquete controller.
+
+Data Access Object (DAO): Para cada entidad de la base de datos (Ahorro, Gasto, etc.), se creó una clase DAO correspondiente. Este patrón encapsula toda la lógica de acceso a datos (sentencias SELECT, INSERT, UPDATE, DELETE), desacoplando completamente la lógica de negocio de la lógica de persistencia. Esto hace que el código sea más fácil de mantener y probar.
+
+Singleton: La clase GestorDatos.java se implementó como un Singleton. Esto asegura que solo exista una única instancia de esta clase en toda la aplicación, convirtiéndola en el "único punto de verdad" para el estado de los datos en tiempo de ejecución.
+
+Fase 2: Módulos Fundamentales - Ahorros y Gastos (20% - 50%)
+Con la arquitectura definida, se procedió a construir las funcionalidades básicas de la aplicación: la gestión de ahorros y gastos.
+
+2.1. Desarrollo del Ciclo CRUD
+Para ambos módulos se implementó el ciclo completo de operaciones (Crear, Leer, Actualizar y Eliminar - CRUD):
+
+Creación de Modelos: Se definieron las clases Ahorro.java y Gasto.java.
+
+Creación de DAOs: Se implementaron AhorroDAO.java y GastoDAO.java con métodos para obtenerTodos, agregar y actualizar.
+
+Vistas (FXML): Se diseñaron tres pantallas para cada módulo:
+
+AhorrosView.fxml / GastosView.fxml: La vista principal que muestra una lista de los registros.
+
+RegistroAhorroView.fxml / RegistroGastoView.fxml: El formulario para añadir un nuevo registro.
+
+ModificacionAhorroView.fxml / ModificacionGastoView.fxml: El formulario para editar un registro existente.
+
+Controladores: Cada vista FXML fue asociada a su respectivo controlador. Los controladores de las vistas principales (AhorrosController, GastosController) se encargaron de:
+
+Obtener los datos desde el GestorDatos.
+
+Vincular los datos a un ListView.
+
+Implementar una CellFactory personalizada para renderizar cada fila de la lista con un diseño propio, incluyendo un botón de "Editar".
+
+Manejar la navegación a las pantallas de registro y modificación.
+
+2.2. Gestión Centralizada de Datos
+El GestorDatos fue crucial en esta fase. Al iniciar la aplicación, carga todos los ahorros y gastos desde los DAOs y los almacena en ObservableLists. Las vistas se enlazan a estas listas, lo que permite que la interfaz de usuario se actualice automáticamente cada vez que los datos cambian, sin necesidad de refrescar manualmente.
+
+Fase 3: Funcionalidades Avanzadas y Refinamiento (50% - 80%)
+Esta fase se centró en construir módulos más complejos y mejorar la interacción del usuario.
+
+3.1. Módulo de Presupuesto
+Vista Principal: Se creó PresupuestoView.fxml, una pantalla que muestra una cuadrícula con los 12 meses del año. Cada mes es una "tarjeta" interactiva.
+
+Vista de Detalle: Se implementó PresupuestoMesView.fxml, una pantalla que muestra un desglose detallado de un mes específico: el presupuesto asignado, el gasto total del mes y el porcentaje consumido.
+
+Lógica de Control:
+
+PresupuestoController se encarga de dibujar dinámicamente los calendarios en cada tarjeta mensual.
+
+Se implementó la navegación desde una tarjeta de mes en la vista principal hacia la vista de detalle (PresupuestoMesView), pasando el mes y año seleccionados.
+
+PresupuestoMesController calcula y muestra las estadísticas del mes, cruzando datos del presupuesto con los gastos registrados.
+
+3.2. Módulo de Categorías
+Vista Dinámica: A diferencia de las listas, CategoriasView.fxml utiliza un FlowPane para mostrar las categorías como tarjetas que se ajustan automáticamente al espacio disponible.
+
+Lógica de Control: CategoriasController genera dinámicamente una tarjeta por cada categoría, asignándole el color guardado en la base de datos y los botones de editar y eliminar.
+
+Integración y Refactorización: Una vez completado este módulo, se refactorizaron las pantallas de RegistroGastoView y ModificacionGastoView. El campo de texto libre para la categoría fue reemplazado por un ComboBox que se llena con las categorías que el usuario ha creado, mejorando la consistencia de los datos.
+
+Fase 4: Implementación del Sistema Multiusuario (80% - 100%)
+Esta fue la transformación más significativa del proyecto, convirtiéndolo de una aplicación para un solo usuario a una plataforma multiusuario completa.
+
+4.1. Modificaciones en la Base de Datos y Modelos
+Tabla de Usuarios: Se añadió una tabla usuarios a la base de datos para almacenar nombre_usuario y contrasena.
+
+Claves Foráneas: Se añadió una columna id_usuario a todas las tablas de datos (gastos, ahorros, categorias, deudas, presupuestos). Esta columna establece una relación directa entre cada registro y el usuario que lo creó.
+
+Actualización de Modelos: Todas las clases en el paquete model fueron actualizadas para incluir el campo idUsuario.
+
+4.2. Refactorización del Backend
+DAOs Seguros: Todos los métodos en los DAOs fueron modificados. En lugar de operar sobre la tabla completa, ahora siempre incluyen una cláusula WHERE id_usuario = ?. Esto es crucial para garantizar que un usuario solo pueda acceder y manipular sus propios datos.
+
+Gestión de Sesión en GestorDatos:
+
+Se añadió un campo usuarioActual para mantener una referencia al usuario que ha iniciado sesión.
+
+Se implementó el método iniciarSesion(Usuario usuario), que guarda al usuario actual y llama a un nuevo método cargarDatosDeUsuario().
+
+cargarDatosDeUsuario() se encarga de llenar todas las ObservableLists llamando a los métodos obtenerPorUsuario(id) de los DAOs.
+
+Se añadió el método cerrarSesion() para limpiar todos los datos al salir.
+
+4.3. Conexión del Flujo de Autenticación
+RegistroController: Se actualizó para usar el UsuarioDAO y guardar los nuevos usuarios en la base de datos.
+
+LoginController: Se eliminó la validación estática ("paco"/"123") y se reemplazó por una llamada al método validar del UsuarioDAO. Si la validación es exitosa, se invoca GestorDatos.getInstance().iniciarSesion(usuarioValidado).
+
+4.4. Finalización y Pulido
+Botón "Cerrar Sesión": Se añadió un botón en la barra de navegación y su lógica correspondiente en el BaseController para llamar a GestorDatos.getInstance().cerrarSesion() y regresar a la pantalla de login.
+
+Dashboard Detallado: Se rediseñó la pantalla de inicio para que coincidiera con el diseño final, mostrando resúmenes gráficos separados para gastos y ahorros del mes actual, con leyendas de colores dinámicas.
+
+Conclusión
+El proyecto QuanTree ha evolucionado desde una aplicación básica de finanzas personales hasta una plataforma multiusuario robusta y con todas las funcionalidades previstas. La arquitectura basada en patrones de diseño probados ha permitido una evolución ordenada y escalable, resultando en un producto final completo, funcional y con un código limpio y profesional.

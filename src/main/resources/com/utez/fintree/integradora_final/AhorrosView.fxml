@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utez.fintree.integradora_final.controller.AhorrosController">
+    <top>
+        <HBox alignment="CENTER" prefHeight="60.0" spacing="15.0" style="-fx-background-color: #eaf4ea; -fx-background-radius: 10;">
+            <BorderPane.margin>
+                <Insets left="20.0" right="20.0" top="10.0" />
+            </BorderPane.margin>
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+            <Button onAction="#handleMenuInicio" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Inicio" />
+            <Button onAction="#handleMenuAhorros" style="-fx-background-color: #6aa84f; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" text="Ahorros" />
+            <Button onAction="#handleMenuGastos" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Gastos" />
+            <Button onAction="#handleMenuDeudas" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Deudas" />
+            <Button onAction="#handleMenuPresupuesto" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Presupuesto" />
+            <Button onAction="#handleMenuCategorias" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Categorías" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <Button onAction="#handleCerrarSesion" style="-fx-background-color: #f8d7da; -fx-text-fill: #721c24; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-color: #f5c6cb; -fx-border-radius: 8; -fx-cursor: hand;" text="Cerrar Sesión" />
+            <ImageView fx:id="walletIconTop" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="15.0">
+            <padding>
+                <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+            </padding>
+            <HBox alignment="CENTER" spacing="20.0">
+                <BarChart fx:id="chartAhorros" title="Ahorros por Mes (Año Actual)">
+                    <xAxis><CategoryAxis side="BOTTOM" /></xAxis>
+                    <yAxis><NumberAxis side="LEFT" /></yAxis>
+                </BarChart>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Registros:" />
+                <!-- COMBOBOX AÑADIDO -->
+                <ComboBox fx:id="cmbSort" prefWidth="180.0" promptText="Ordenar por..." />
+                <Pane HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleRegistrarAhorro" style="-fx-background-color: #6aa84f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8;" text="Registrar Ahorro" />
+            </HBox>
+            <ListView fx:id="listaAhorros" prefHeight="200.0" style="-fx-background-color: #eaf4ea; -fx-background-radius: 10;" VBox.vgrow="ALWAYS" />
+        </VBox>
+    </center>
+</BorderPane>

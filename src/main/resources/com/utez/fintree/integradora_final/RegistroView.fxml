@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER" prefHeight="600.0" prefWidth="900.0" spacing="50.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utez.fintree.integradora_final.controller.RegistroController">
+    <padding>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+    </padding>
+    <children>
+        <VBox alignment="CENTER" prefHeight="500.0" prefWidth="350.0" spacing="20.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+            <children>
+                <VBox alignment="CENTER" spacing="-15.0">
+                    <children>
+                        <Label style="-fx-font-family: 'Georgia'; -fx-font-size: 48px; -fx-text-fill: #38761d; -fx-font-weight: bold;" text="QUAN" />
+                        <Label style="-fx-font-family: 'Georgia'; -fx-font-size: 48px; -fx-text-fill: #38761d; -fx-font-weight: bold;" text="TREE" />
+                    </children>
+                </VBox>
+                <Label text="COMO UN ARBOL QUE CRECE CON TUS FINANZAS" />
+                <ImageView fx:id="walletImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </VBox>
+
+        <VBox alignment="CENTER_LEFT" prefHeight="500.0" prefWidth="350.0" spacing="15.0" style="-fx-background-color: #eaf4ea; -fx-background-radius: 20; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 5);">
+            <padding>
+                <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Empieza a tomar el control de tus finanzas">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="USUARIO" />
+                        <TextField fx:id="txtUsuario" promptText="Crear usuario" style="-fx-background-radius: 10; -fx-border-color: #dddddd; -fx-border-radius: 10; -fx-padding: 8px;" />
+                    </children>
+                </VBox>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="CONTRASEÑA" />
+                        <PasswordField fx:id="txtContrasena" promptText="Crear contraseña" style="-fx-background-radius: 10; -fx-border-color: #dddddd; -fx-border-radius: 10; -fx-padding: 8px;" />
+                    </children>
+                </VBox>
+                <VBox spacing="5.0">
+                    <children>
+                        <Label text="CONFIRMAR CONTRASEÑA" />
+                        <PasswordField fx:id="txtConfirmarContrasena" promptText="Confirmar contraseña" style="-fx-background-radius: 10; -fx-border-color: #dddddd; -fx-border-radius: 10; -fx-padding: 8px;" />
+                    </children>
+                </VBox>
+                <Button fx:id="btnRegistrarse" onAction="#handleRegistrarse" prefHeight="40.0" prefWidth="300.0" style="-fx-background-color: #6aa84f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10; -fx-cursor: hand;" text="REGISTRARSE" />
+                <Hyperlink fx:id="linkVolverLogin" onAction="#handleVolverLogin" text="Ya tengo una cuenta" />
+            </children>
+        </VBox>
+    </children>
+</HBox>

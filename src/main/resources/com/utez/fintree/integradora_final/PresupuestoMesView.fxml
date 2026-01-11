@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.utez.fintree.integradora_final.controller.PresupuestoMesController">
+    <top>
+        <!-- Barra de navegación con el nuevo estilo -->
+        <HBox alignment="CENTER" prefHeight="60.0" spacing="15.0" style="-fx-background-color: #eaf4ea; -fx-background-radius: 10;">
+            <BorderPane.margin>
+                <Insets left="20.0" right="20.0" top="10.0" />
+            </BorderPane.margin>
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+
+            <!-- Botones de navegación -->
+            <Button onAction="#handleMenuInicio" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Inicio" />
+            <Button onAction="#handleMenuAhorros" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Ahorros" />
+            <Button onAction="#handleMenuGastos" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Gastos" />
+            <Button onAction="#handleMenuDeudas" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Deudas" />
+            <Button onAction="#handleMenuPresupuesto" style="-fx-background-color: #6aa84f; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold;" text="Presupuesto" />
+            <Button onAction="#handleMenuCategorias" style="-fx-background-color: transparent; -fx-font-weight: bold;" text="Categorías" />
+
+            <Pane HBox.hgrow="ALWAYS" />
+
+            <!-- Botones del lado derecho -->
+            <Button onAction="#handleCerrarSesion" style="-fx-background-color: #f8d7da; -fx-text-fill: #721c24; -fx-font-weight: bold; -fx-background-radius: 8; -fx-border-color: #f5c6cb; -fx-border-radius: 8; -fx-cursor: hand;" text="Cerrar Sesión" />
+
+            <ImageView fx:id="walletIconTop" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+        </HBox>
+    </top>
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20.0">
+            <padding>
+                <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+            </padding>
+            <children>
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Button fx:id="btnVolver" onAction="#handleVolver" style="-fx-font-size: 24px; -fx-background-color: transparent; -fx-cursor: hand;" text="←" />
+                        <Label fx:id="lblTituloMes" text="Enero 2025" style="-fx-font-size: 24px; -fx-font-weight: bold;">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" style="-fx-background-color: #d9ead3; -fx-background-radius: 15;">
+                    <padding>
+                        <Insets left="25.0" right="25.0" />
+                    </padding>
+                    <children>
+                        <ImageView fx:id="presupuestoIcon" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox spacing="5.0">
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                            <Label text="Presupuesto mensual:" />
+                            <Label fx:id="lblPresupuestoTotal" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="\$0.00 MXN" />
+                        </VBox>
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Button onAction="#handleEditarPresupuesto" text="Editar Presupuesto" />
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" style="-fx-background-color: white; -fx-background-radius: 15;">
+                    <padding>
+                        <Insets left="25.0" right="25.0" />
+                    </padding>
+                    <children>
+                        <ImageView fx:id="gastoIcon" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox spacing="5.0">
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                            <Label text="Gasto acumulado del mes:" />
+                            <Label fx:id="lblGastoAcumulado" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="\$0.00 MXN" />
+                        </VBox>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" style="-fx-background-color: white; -fx-background-radius: 15;">
+                    <padding>
+                        <Insets left="25.0" right="25.0" />
+                    </padding>
+                    <children>
+                        <VBox spacing="5.0">
+                            <HBox.margin>
+                                <Insets left="15.0" />
+                            </HBox.margin>
+                            <Label text="Presupuesto consumido:" />
+                            <Label fx:id="lblPorcentajeConsumido" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="0.00%" />
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </center>
+</BorderPane>
